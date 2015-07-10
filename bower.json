@@ -1,0 +1,24 @@
+{
+  "name": "Promise",
+  "main": "promise.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/herrmanno/promise",
+  "authors": [
+    "OHerrmann92 <O.herrmann92@gmail.com>"
+  ],
+  "description": "Simple Promise implmentation.",
+  "keywords": [
+    "promise",
+    "js",
+    "javascript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "src",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
