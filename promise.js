@@ -10,7 +10,7 @@
 
 		if(typeof onResolve === 'function')
 			this.onResolve = onResolve;
-		if(typeof onReject === 'function')	
+		if(typeof onReject === 'function')
 			this.onReject = onReject;
 		if(typeof onResolve === 'string')
 			this.name = onResolve;
@@ -129,4 +129,18 @@
 		return p;
 	};
 
+	window.Promise.create = function(obj) {
+		if(obj instanceof Promise)
+			return obj;
+		else {
+			var p = new Promise();
+
+			if(obj === undefined || obj === null || obj === false)
+				p.reject(obj);
+			else
+				p.resolve(obj);
+
+			return p;
+		}
+	};
 })();

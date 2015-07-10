@@ -1,0 +1,16 @@
+{
+  "name": "promise",
+  "version": "1.0.0",
+  "description": "Simple Promise implementation, similiar to Q! but more lightweight",
+  "main": "promise.js",
+  "dependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-git": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0",
+    "yargs": "^3.15.0"
+  },
+  "author": "Oliver Herrmann",
+  "license": "ISC"
+}
