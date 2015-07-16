@@ -35,28 +35,7 @@ gulp.task('watch', function() {
   gulp.watch(src, ['bundle-min']);
 });
 
-//git tasks
 
-gulp.task('addAll', function() {
-    return gulp.src('.')
-        .pipe(git.add());
-});
-
-gulp.task('commit', ['addAll'], function() {
-    var msg = argv.m;
-    if(!msg)
-        throw "Commit message must be provided via --m";
-
-    return gulp.src(src)
-        .pipe(git.commit(msg));
-});
-
-gulp.task('publish', ['commit'], function() {
-    git.push('origin', 'master', function (err) {
-        if (err) throw err;
-    });
-});
-
-gulp.task('default', ['watch', 'bundle', 'bundle-min'], function() {
+gulp.task('default', ['bundle', 'bundle-min'], function() {
 	return void 0;
 });
