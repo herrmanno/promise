@@ -129,6 +129,28 @@
 		return p;
 	};
 
+	window.Promise.chain = function(arr) {
+		var p = new Promise();
+		var data = [];
+
+		function next() {
+
+			if(arr.length) {
+				arr.shift.call(null)
+				.then(function(result) {
+					data.push(result);
+					next();
+				})
+				.catch(p.reject);
+			}
+			else {
+				p.resolve(data);
+			}
+		}
+
+		return p;
+	};
+
 	window.Promise.create = function(obj) {
 		if(obj instanceof Promise)
 			return obj;

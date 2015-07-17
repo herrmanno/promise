@@ -31,11 +31,16 @@ gulp.task('bundle-min', ['bundle'], function() {
 		.pipe(gulp.dest(dest));
 });
 
+gulp.task('doc', ['bundle-min'], function() {
+	return gulp.src(dest+bundlemin)
+		.pipe(jsdoc('doc'));
+});
+
 gulp.task('watch', function() {
   gulp.watch(src, ['bundle-min']);
 });
 
 
-gulp.task('default', ['bundle', 'bundle-min'], function() {
+gulp.task('default', ['doc'], function() {
 	return void 0;
 });
