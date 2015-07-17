@@ -2,9 +2,8 @@
   "name": "promise",
   "version": "1.0.0",
   "description": "Simple Promise implementation, similiar to Q! but more lightweight",
-  "main": "promise.js",
-  "dependencies": {},
-  "devDependencies": {
+  "main": "promise.js",  
+  "dependencies": {
     "del": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-rename": "^1.2.2",
