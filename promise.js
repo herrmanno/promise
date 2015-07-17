@@ -1,4 +1,7 @@
 (function() {
+	/**
+	* @constructor
+	*/
 	window.Promise = function Promise(onResolve, onReject) {
 		var self = this;
 
@@ -97,6 +100,9 @@
 		};
 	};
 
+	/**
+	* @param {Array} arr - An Array of Promises
+	*/
 	window.Promise.all = function(arr) {
 		var p = new Promise();
 
@@ -124,6 +130,28 @@
 					p.reject(err);
 				});
 			});
+		}
+
+		return p;
+	};
+
+	window.Promise.chain = function(arr) {
+		var p = new Promise();
+		var data = [];
+
+		function next() {
+
+			if(arr.length) {
+				arr.shift.call(null)
+				.then(function(result) {
+					data.push(result);
+					next();
+				})
+				.catch(p.reject);
+			}
+			else {
+				p.resolve(data);
+			}
 		}
 
 		return p;

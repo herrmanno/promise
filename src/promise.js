@@ -1,4 +1,7 @@
 (function() {
+	/**
+	* @constructor
+	*/
 	window.Promise = function Promise(onResolve, onReject) {
 		var self = this;
 
@@ -97,6 +100,9 @@
 		};
 	};
 
+	/**
+	* @param {Array} arr - An Array of Promises
+	*/
 	window.Promise.all = function(arr) {
 		var p = new Promise();
 

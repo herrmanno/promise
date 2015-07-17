@@ -32,7 +32,7 @@ gulp.task('bundle-min', ['bundle'], function() {
 });
 
 gulp.task('doc', ['bundle-min'], function() {
-	return gulp.src(dest+bundlemin)
+	return gulp.src(dest+bundle)
 		.pipe(jsdoc('doc'));
 });
 
