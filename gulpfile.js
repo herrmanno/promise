@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var del = require('del');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var git = require('gulp-git');
+var jsdoc = require('gulp-jsdoc');
 var argv = require('yargs').argv;
 
 var src = ['promise'].map(function(f) {return './src/'+f+'.js';});
