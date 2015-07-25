@@ -1,46 +1,45 @@
 var gulp = require('gulp');
-var del = require('del');
+var del = require('delete');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var jsdoc = require('gulp-jsdoc');
-var argv = require('yargs').argv;
-
-var src = ['promise'].map(function(f) {return './src/'+f+'.js';});
-
-var bundle = 'promise.js';
-var bundlemin = bundle.substr(0, bundle.length-2)+'min.js';
-
-var dest = './';
-var delFiles = [bundle, bundlemin].map(function(f) {return dest+f;});
+var webpack = require('gulp-webpack');
 
 
+var src = {
+    ts: ['src/ts/**/*.ts'],
+    js: ['src/js/**/*.js']
+}
 
-gulp.task('clean', function (cb) {
-  del(delFiles, cb);
-});
+var name = 'ho-promise'
 
-gulp.task('bundle', ['clean'], function() {
-	return gulp.src(src)
-		.pipe(gulp.dest(dest));
-});
+var dist = 'dist';
 
-gulp.task('bundle-min', ['bundle'], function() {
-	return gulp.src(dest+bundle)
-		.pipe(uglify())
-		.pipe(rename(bundlemin))
-		.pipe(gulp.dest(dest));
-});
+var entry = 'promise.js';
 
-gulp.task('doc', ['bundle-min'], function() {
-	return gulp.src(dest+bundle)
-		.pipe(jsdoc('doc'));
-});
 
-gulp.task('watch', function() {
-  gulp.watch(src, ['bundle-min']);
+gulp.task('clean', function() {
+    del.sync(dist);
+})
+
+gulp.task('package', ['clean'], function() {
+    return gulp.src('src/js/' + entry)
+    .pipe(webpack({
+        output: {
+            filename: entry
+        }
+    }))
+    .pipe(gulp.dest(dist));
 });
 
 
-gulp.task('default', ['doc'], function() {
-	return void 0;
+gulp.task('mini', ['package'], function() {
+    return gulp.src(dist + '/' + entry)
+    .pipe(uglify())
+    .pipe(rename({
+        extname: '.min.js'
+    }))
+    .pipe(gulp.dest(dist));
 });
+
+
+gulp.task('default', ['mini'], null);
