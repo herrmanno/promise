@@ -41,5 +41,10 @@ gulp.task('mini', ['package'], function() {
     .pipe(gulp.dest(dist));
 });
 
+gulp.task('def', function() {
+    return gulp.src('src/js/**/*.d.ts')
+    .pipe(gulp.dest(dist + '/d.ts'));
+});
 
-gulp.task('default', ['mini'], null);
+
+gulp.task('default', ['mini', 'def'], null);
