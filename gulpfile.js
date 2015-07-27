@@ -2,15 +2,14 @@ var gulp = require('gulp');
 var del = require('delete');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var webpack = require('gulp-webpack');
 
 
 var src = {
     ts: ['src/ts/**/*.ts'],
     js: ['src/js/**/*.js']
-}
+};
 
-var name = 'ho-promise'
+var name = 'ho-promise';
 
 var dist = 'dist';
 
@@ -19,7 +18,7 @@ var entry = 'promise.js';
 
 gulp.task('clean', function() {
     del.sync(dist);
-})
+});
 
 gulp.task('package', ['clean'], function() {
     return gulp.src('src/js/' +  entry)
