@@ -23,16 +23,6 @@ gulp.task('clean', function() {
 gulp.task('package', ['clean'], function() {
     return gulp.src('src/js/' +  entry)
     .pipe(gulp.dest(dist));
-
-    /*
-    return gulp.src('src/js/' + entry)
-    .pipe(webpack({
-        output: {
-            filename: entry
-        }
-    }))
-    .pipe(gulp.dest(dist));
-    */
 });
 
 

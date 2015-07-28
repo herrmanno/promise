@@ -4,7 +4,7 @@ module ho.promise {
 
         constructor(func?: (resolve, reject) => any) {
             if (typeof func === 'function')
-                func.call(this, this.resolve.bind(this), this.reject.bind(this));
+                func.call(arguments.callee, this.resolve.bind(this), this.reject.bind(this));
         }
 
         private data: any = undefined;
