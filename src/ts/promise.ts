@@ -1,29 +1,29 @@
 module ho.promise {
 
-    export class Promise {
+    export class Promise<T, E> {
 
         constructor(func?: (resolve, reject) => any) {
             if (typeof func === 'function')
                 func.call(arguments.callee, this.resolve.bind(this), this.reject.bind(this));
         }
 
-        private data: any = undefined;
-        private onResolve: Function = undefined;
-        private onReject: Function = undefined;
+        private data: T|E = undefined;
+        private onResolve: (arg1:T) => any = undefined;
+        private onReject: (arg1:E) => any = undefined;
 
         public resolved: boolean = false;
         public rejected: boolean = false;
         public done: boolean = false;
 
-        private ret: Promise = undefined;
+        private ret: Promise<T, E> = undefined;
 
-        private set(data?): void {
+        private set(data?: T|E): void {
             if (this.done)
                 throw "Promise is already resolved / rejected";
             this.data = data;
         }
 
-        public resolve(data?): void {
+        public resolve(data?: T): void {
             this.set(data);
             this.resolved = this.done = true;
             if (typeof this.onResolve === 'function') {
@@ -33,10 +33,10 @@ module ho.promise {
 
         private _resolve(): void {
             if (this.ret === undefined) {
-                this.ret = new Promise();
+                this.ret = new Promise<T,E>();
             }
 
-            var v: any = this.onResolve(this.data);
+            var v: any = this.onResolve(<T>this.data);
 
             if (v && v instanceof Promise) {
                 v.then(this.ret.resolve, this.ret.reject);
@@ -46,31 +46,31 @@ module ho.promise {
             }
         }
 
-        public reject(data?): void {
+        public reject(data?: E): void {
             this.set(data);
             this.rejected = this.done = true;
 
             if (typeof this.onReject === 'function') {
-                this.onReject(this.data);
+                this.onReject(<E>this.data);
             }
 
             if (this.ret) {
-                this.ret.reject(this.data);
+                this.ret.reject(<E>this.data);
             }
         }
 
         private _reject(): void {
             if (this.ret === undefined) {
-                this.ret = new Promise();
+                this.ret = new Promise<T,E>();
             }
 
-            this.onReject(this.data);
-            this.ret.reject(this.data);
+            this.onReject(<E>this.data);
+            this.ret.reject(<E>this.data);
         }
 
-        public then(res: Function, rej?: Function): Promise {
+        public then(res: (arg1:T)=>any, rej?: (arg1:E)=>any): Promise<T,E> {
             if (this.ret === undefined) {
-                this.ret = new Promise();
+                this.ret = new Promise<T,E>();
             }
 
             if (res && typeof res === 'function')
@@ -90,14 +90,14 @@ module ho.promise {
             return this.ret;
         }
 
-        public catch(cb: Function): void {
+        public catch(cb: (arg1:E)=>any): void {
             this.onReject = cb;
 
             if (this.rejected)
                 this._reject();
         }
 
-        static all(arr: Array<Promise>): Promise {
+        static all(arr: Array<Promise<any, any>>): Promise<any, any> {
             var p = new Promise();
 
             var data = [];
@@ -129,15 +129,15 @@ module ho.promise {
             return p;
         }
 
-        static chain(arr: Array<Promise>): Promise {
-            var p: Promise = new Promise();
+        static chain(arr: Array<Promise<any, any>>): Promise<any, any> {
+            var p: Promise<any, any> = new Promise();
             var data: Array<any> = [];
 
             function next() {
                 if (p.done)
                     return;
 
-                var n: Promise = arr.length ? arr.shift() : p;
+                var n: Promise<any, any> = arr.length ? arr.shift() : p;
                 n.then(
                     (result) => {
                         data.push(result);
@@ -154,7 +154,7 @@ module ho.promise {
             return p;
         }
 
-        static create(obj: any): Promise {
+        static create(obj: any): Promise<any, any> {
             if (obj instanceof Promise)
                 return obj;
             else {

@@ -24,6 +24,7 @@
         "!./node_modules/**/*"
     ],
     "files": [
+        "./gpromise.ts",
         "./promise.ts"
     ]
 }

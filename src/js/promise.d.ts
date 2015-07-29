@@ -1,5 +1,5 @@
 declare module ho.promise {
-    class Promise {
+    class Promise<T, E> {
         constructor(func?: (resolve, reject) => any);
         private data;
         private onResolve;
@@ -9,14 +9,14 @@ declare module ho.promise {
         done: boolean;
         private ret;
         private set(data?);
-        resolve(data?: any): void;
+        resolve(data?: T): void;
         private _resolve();
-        reject(data?: any): void;
+        reject(data?: E): void;
         private _reject();
-        then(res: Function, rej?: Function): Promise;
-        catch(cb: Function): void;
-        static all(arr: Array<Promise>): Promise;
-        static chain(arr: Array<Promise>): Promise;
-        static create(obj: any): Promise;
+        then(res: (arg1: T) => any, rej?: (arg1: E) => any): Promise<T, E>;
+        catch(cb: (arg1: E) => any): void;
+        static all(arr: Array<Promise<any, any>>): Promise<any, any>;
+        static chain(arr: Array<Promise<any, any>>): Promise<any, any>;
+        static create(obj: any): Promise<any, any>;
     }
 }
