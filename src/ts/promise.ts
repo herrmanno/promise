@@ -2,7 +2,7 @@ module ho.promise {
 
     export class Promise<T, E> {
 
-        constructor(func?: (resolve, reject) => any) {
+        constructor(func?: (resolve:(arg:T)=>void, reject:(arg:E)=>void) => any) {
             if (typeof func === 'function')
                 func.call(
                     arguments.callee,

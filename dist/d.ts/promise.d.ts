@@ -1,6 +1,6 @@
 declare module ho.promise {
     class Promise<T, E> {
-        constructor(func?: (resolve, reject) => any);
+        constructor(func?: (resolve: (arg: T) => void, reject: (arg: E) => void) => any);
         private data;
         private onResolve;
         private onReject;
