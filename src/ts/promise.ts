@@ -47,7 +47,7 @@ module ho.promise {
             var v: any = this.onResolve(<T>this.data);
 
             if (v && v instanceof Promise) {
-                v.then(this.ret.resolve, this.ret.reject);
+                v.then(this.ret.resolve.bind(this.ret), this.ret.reject.bind(this.ret));
             }
             else {
                 this.ret.resolve(v);
