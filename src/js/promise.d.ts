@@ -13,7 +13,7 @@ declare module ho.promise {
         private _resolve();
         reject(data?: E): void;
         private _reject();
-        then(res: (arg1: T) => any, rej?: (arg1: E) => any): Promise<T, E>;
+        then(res: (arg1: T) => any, rej?: (arg1: E) => any): Promise<any, any>;
         catch(cb: (arg1: E) => any): void;
         static all(arr: Array<Promise<any, any>>): Promise<any, any>;
         static chain(arr: Array<Promise<any, any>>): Promise<any, any>;

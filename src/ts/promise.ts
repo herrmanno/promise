@@ -76,7 +76,7 @@ module ho.promise {
             this.ret.reject(<E>this.data);
         }
 
-        public then(res: (arg1:T)=>any, rej?: (arg1:E)=>any): Promise<T,E> {
+        public then(res: (arg1:T)=>any, rej?: (arg1:E)=>any): Promise<any,any> {
             if (this.ret === undefined) {
                 this.ret = new Promise<T,E>();
             }

@@ -1,7 +1,7 @@
 {
   "name": "Promise",
   "main": "promise.js",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "homepage": "https://github.com/herrmanno/promise",
   "authors": [
     "OHerrmann92 <O.herrmann92@gmail.com>"

@@ -22,13 +22,6 @@ gulp.task('clean', function() {
     del.sync(dist);
 });
 
-/*
-gulp.task('package', ['clean'], function() {
-    return gulp.src('src/js/' +  entry)
-    .pipe(gulp.dest(dist));
-});
-*/
-
 gulp.task('package', ['clean'], function() {
     return gulp.src('src/ts/promise.ts')
     .pipe(sourcemap.init())
@@ -58,9 +51,10 @@ gulp.task('mini', ['package'], function() {
 gulp.task('def', ['mini'], function() {
     var ts = gulp.src(src.ts)
     .pipe(typescript({
+        out: entry,
         declarationFiles: true
     }));
-    return ts.dts.pipe(gulp.dest(dist + '/d.ts'));
+    return ts.dts.pipe(gulp.dest(dist));
 });
 
 
