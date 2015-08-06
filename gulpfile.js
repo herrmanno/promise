@@ -4,11 +4,11 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var typescript = require('gulp-typescript');
 var sourcemap = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
 
 
 var src = {
-    ts: ['src/ts/**/*.ts'],
-    js: ['src/js/**/*.js']
+    ts: ['src/**/*.ts'],
 };
 
 var name = 'ho-promise';
@@ -22,6 +22,7 @@ gulp.task('clean', function() {
     del.sync(dist);
 });
 
+/*
 gulp.task('package', ['clean'], function() {
     return gulp.src('src/ts/promise.ts')
     .pipe(sourcemap.init())
@@ -30,6 +31,19 @@ gulp.task('package', ['clean'], function() {
     }))
     .pipe(sourcemap.write())
     .pipe(gulp.dest(dist));
+});
+*/
+
+var tsProject = typescript.createProject('gulp-tsconfig.json');
+gulp.task('package', ['clean'], function() {
+    var tsResult = tsProject.src()
+        .pipe(sourcemap.init())
+        .pipe(typescript(tsProject));
+
+  return tsResult.js
+        .pipe(concat(entry)) // You can use other plugins that also support gulp-sourcemaps
+        .pipe(sourcemap.write()) // Now the sourcemaps are added to the .js file
+        .pipe(gulp.dest(dist));
 });
 
 
@@ -42,11 +56,6 @@ gulp.task('mini', ['package'], function() {
     .pipe(gulp.dest(dist));
 });
 
-
-//gulp.task('def', function() {
-//    return gulp.src('src/js/**/*.d.ts')
-//    .pipe(gulp.dest(dist + '/d.ts'));
-//});
 
 gulp.task('def', ['mini'], function() {
     var ts = gulp.src(src.ts)

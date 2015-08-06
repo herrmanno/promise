@@ -1,0 +1,14 @@
+{
+    "version": "1.5.0-beta",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "noEmitOnError": false,
+        "sortOutput": true,
+        "removeComments": false
+    },
+    "compileOnSave": false,
+    "files": [
+        "src/ho/promise/promise.ts"
+    ]
+}

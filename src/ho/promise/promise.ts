@@ -72,7 +72,8 @@ module ho.promise {
                 this.ret = new Promise<T,E>();
             }
 
-            this.onReject(<E>this.data);
+            if(typeof this.onReject === 'function')
+                this.onReject(<E>this.data);
             this.ret.reject(<E>this.data);
         }
 
